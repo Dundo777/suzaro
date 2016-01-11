@@ -1,0 +1,4 @@
+suzaro:
+    resource: "@SuzaroBundle/Resources/config/routing.yml"
+    prefix:   /
+

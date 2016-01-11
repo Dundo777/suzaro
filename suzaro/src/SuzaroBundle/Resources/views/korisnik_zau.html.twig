@@ -1,0 +1,94 @@
+{% extends '::base.html.twig' %}
+
+{% block css %}
+  <style>
+    th, td {
+      text-align: center !important;
+    }
+  </style>
+{% endblock %}
+{% block body %}
+<div class="form-group">
+  <label for="sel">Odaberite korisnika: </label>
+  <select class="form-control" id="sel">
+    {% for kor in korisnici %}
+      <option value="{{kor.id}}">{{kor.korisnicko_ime}}</option>
+    {%  endfor %}
+  </select>
+</div>
+<button id="load" class="btn btn-success">Učitaj</button>
+<br><br>
+<div id="alert" class="alert alert-info" style="display: none">Nema zapisa</div>
+<div id="cont" class="container-fluid" style="display: none">                 
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Inv broj</th>
+        <th>Naziv</th>
+        <th>Datum</th>
+        <th>Vraćeno</th>
+      </tr>
+    </thead>
+    <tbody id="tbody">
+    </tbody>
+  </table>
+</div>
+
+{% endblock %}
+
+{% block javascript %}
+  <script>
+    $(document).on('click', '#load', function() {
+      var id = $("#sel").val();
+      $.ajax({
+      url: "{{path('korisnik_koristenje_ajax')}}",
+      type: "POST",
+      data: {id: id},
+      success: function (r) {
+        if (r.json === null) {
+          $("#cont").hide();
+          $("#alert").show();
+        } else {
+          $("#alert").hide();
+          $("#tbody").html('');
+          $.each(r, function(index, element) {
+            $.each(element, function(i, obj) {
+              $("#tbody").append('<tr>');
+              $("#tbody").append('\
+                <td>\
+                ' + obj.oprema.inventar_broj + '\
+                </td>\
+              ');  
+              $("#tbody").append('\
+                <td>\
+                ' + obj.oprema.naziv + '\
+                </td>\
+              ');
+              $("#tbody").append('\
+                <td>\
+                ' + obj.vrijeme + '\
+                </td>\
+              ');
+              if (obj.vraceno === '0') {
+                $("#tbody").append('\
+                  <td>\
+                    <span class="glyphicon glyphicon-remove"></span>\
+                  </td>\
+                ');
+              } else {
+                $("#tbody").append('\
+                  <td>\
+                    <span class="glyphicon glyphicon-ok"></span>\
+                  </td>\
+                ');
+              }
+              $("#tbody").append('</tr>');
+            });
+          });
+          $("#cont").show();
+        }
+      }
+      });
+    });
+  </script>
+{% endblock %}

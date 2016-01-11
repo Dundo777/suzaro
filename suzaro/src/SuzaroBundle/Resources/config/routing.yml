@@ -1,0 +1,55 @@
+index:
+    path: /
+    defaults: { _controller: SuzaroBundle:Index:index }
+    
+korisnici:
+    path: /korisnici
+    defaults: { _controller: SuzaroBundle:Users:index }
+    
+korisnici_novi:
+    path: /korisnici/novi
+    defaults: { _controller: SuzaroBundle:Users:addUser }
+    
+korisnici_uredi:
+    path: /korisnici/uredi
+    defaults: { _controller: SuzaroBundle:Users:editUser }
+    
+korisnici_obrisi:
+    path: /korisnici/obrisi
+    defaults: { _controller: SuzaroBundle:Users:deleteUser }
+    
+oprema:
+    path: /oprema
+    defaults: { _controller: SuzaroBundle:Oprema:index }
+    
+oprema_nova:
+    path: /oprema/nova
+    defaults: { _controller: SuzaroBundle:Oprema:addEquip }
+    
+oprema_uredi:
+    path: /oprema/uredi
+    defaults: { _controller: SuzaroBundle:Oprema:editEquip }
+    
+oprema_obrisi:
+    path: /oprema/obrisi
+    defaults: { _controller: SuzaroBundle:Oprema:deleteEquip }
+    
+korisnik_koristenje:
+    path: /korisnik/koristenje
+    defaults: { _controller: SuzaroBundle:Rezervacija:index }
+    
+korisnik_koristenje_ajax:
+    path: /korisnik/koristenje/korisnik
+    defaults: { _controller: SuzaroBundle:Rezervacija:userRes }
+    
+oprema_koristenje:
+    path: /oprema/koristenje
+    defaults: { _controller: SuzaroBundle:Rezervacija:oprema }
+    
+oprema_koristenje_ajax:
+    path: /oprema/koristenje/oprema
+    defaults: { _controller: SuzaroBundle:Rezervacija:opremaRes }
+    
+rezervacija:
+    path: /rezervacija
+    defaults: { _controller: SuzaroBundle:Rezervacija:nova }

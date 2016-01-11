@@ -1,0 +1,56 @@
+{% extends '::base.html.twig' %}
+
+{% block css %}
+  <style>
+    th, td {
+      text-align: center !important;
+    }
+  </style>
+{% endblock %}
+{% block body %}
+<div class="form-group">
+  <label for="korisnik">Odaberite korisnika: </label>
+  <select class="form-control" id="korisnik">
+    {% for kor in korisnici %}
+      <option value="{{kor.id}}">{{kor.korisnicko_ime}}</option>
+    {%  endfor %}
+  </select>
+  <label for="korisnik">Odaberite opremu: </label>
+  <select class="form-control" id="oprema">
+    {% for op in oprema %}
+      <option value="{{op.inventar_broj}}">{{op.naziv}} - {{op.inventar_broj}}</option>
+    {%  endfor %}
+  </select>
+  <label for="datum-od">Odaberite datum početka: </label>
+  <input type="date" class="form-control" id="datum-od">
+  <label for="datum-do">Odaberite datum završetka: </label>
+  <input type="date" class="form-control" id="datum-do">
+</div>
+<button id="rezerviraj" class="btn btn-success">Rezerviraj</button>
+
+{% endblock %}
+
+{% block javascript %}
+  <script>
+    $(document).on('click', '#rezerviraj', function() {
+      var korisnik = $("#korisnik").val();
+      var oprema = $("#oprema").val();
+      var datumOd = $("#datum-od").val();
+      var datumDo = $("#datum-do").val();
+      
+      $.ajax({
+      url: "{{path('rezervacija')}}",
+      type: "POST",
+      data: {
+            korisnik: korisnik,
+            oprema: oprema,
+            datumOd: datumOd,
+            datumDo: datumDo
+            },
+      success: function (resp) {
+        alert(resp);
+      }
+      });
+    });
+  </script>
+{% endblock %}
